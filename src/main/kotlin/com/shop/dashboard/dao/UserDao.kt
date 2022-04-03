@@ -20,7 +20,6 @@ class UserDao @Autowired constructor(private val jdbcTemplate: JdbcTemplate) {
                 enabled = checkNotNull(resultSet.getBoolean("enabled"))
             )
         }
-        //Query records to print out:
         return jdbcTemplate.query("SELECT * FROM user", rowMapper)
     }
 }

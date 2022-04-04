@@ -32,6 +32,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
+	implementation("javax.xml.bind:jaxb-api")
+	implementation("org.glassfish.jaxb:jaxb-runtime")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("mysql:mysql-connector-java")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

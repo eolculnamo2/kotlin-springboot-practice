@@ -10,7 +10,7 @@ import java.sql.ResultSet
 @Repository
 class UserDao @Autowired constructor(private val jdbcTemplate: JdbcTemplate) {
     fun getAllUsers(): List<UserEntity> {
-        val rowMapper: RowMapper<UserEntity> = RowMapper<UserEntity> { resultSet: ResultSet, rowIndex: Int ->
+        val rowMapper: RowMapper<UserEntity> = RowMapper<UserEntity> { resultSet: ResultSet, _: Int ->
             UserEntity(
                 uuid = checkNotNull(resultSet.getString("uuid")),
                 email = checkNotNull(resultSet.getString("email")),
@@ -21,5 +21,10 @@ class UserDao @Autowired constructor(private val jdbcTemplate: JdbcTemplate) {
             )
         }
         return jdbcTemplate.query("SELECT * FROM user", rowMapper)
+    }
+
+    fun createUser(user: UserEntity) {
+        jdbcTemplate.execute("INSERT INTO user(uuid, email, password, first_name, last_name, enabled) VALUES" +
+                "('${user.uuid}', '${user.email}', '${user.password}', '${user.firstName}', '${user.lastName}', ${user.enabled})")
     }
 }

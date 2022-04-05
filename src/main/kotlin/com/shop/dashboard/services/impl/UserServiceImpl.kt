@@ -5,13 +5,17 @@ import com.shop.dashboard.entities.UserEntity
 import com.shop.dashboard.jax.NewUser
 import com.shop.dashboard.jax.User
 import com.shop.dashboard.mappers.toUser
+import com.shop.dashboard.services.PasswordEncryptionService
 import com.shop.dashboard.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UserServiceImpl @Autowired constructor(private val userDao: UserDao) : UserService {
+class UserServiceImpl @Autowired constructor(
+        private val userDao: UserDao,
+        private val passwordEncryptionService: PasswordEncryptionService
+    ) : UserService {
 
     override fun getAllUsers(): List<User> {
         val userEntities = userDao.getAllUsers()
@@ -21,10 +25,10 @@ class UserServiceImpl @Autowired constructor(private val userDao: UserDao) : Use
     }
 
     override fun createUser(newUser: NewUser): User {
-        var entity = UserEntity(
+        val entity = UserEntity(
             uuid = UUID.randomUUID().toString(),
             email = newUser.email,
-            password = newUser.password, // encrypt here
+            password = newUser.password.let(passwordEncryptionService::encrypt),
             firstName = newUser.firstName,
             lastName = newUser.lastName,
             enabled = true,

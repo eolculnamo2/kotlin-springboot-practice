@@ -1,16 +1,20 @@
 package com.shop.dashboard.resources
 
-import javax.ws.rs.DELETE
-import javax.ws.rs.POST
-import javax.ws.rs.Path
+import com.shop.dashboard.jax.Login
+import com.shop.dashboard.jax.User
+import com.shop.dashboard.services.LoginService
+import org.springframework.beans.factory.annotation.Autowired
+import javax.validation.Valid
+import javax.ws.rs.*
+import javax.ws.rs.core.MediaType
 
 @Path("/sessions")
-class SessionResource {
+class SessionResource @Autowired constructor(private val loginService: LoginService) {
 
     @POST
-    fun login() {
-        println("Logging in...")
-    }
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun login(@Valid login: Login): User = loginService.authenticate(login.email, login.password)
 
     @DELETE
     fun logout() {

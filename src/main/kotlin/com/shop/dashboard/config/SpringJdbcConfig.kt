@@ -10,12 +10,12 @@ import javax.sql.DataSource
 @ComponentScan("com.shop.dashboard")
 class SpringJdbcConfig {
     @Bean
-    fun mysqlDataSource(): DataSource {
+    fun postgresDataSource(): DataSource {
         val dataSource = DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/ecommerce");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+//        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("postgres");
 
         return dataSource;
     }

@@ -3,8 +3,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.6.6"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	id("org.flywaydb.flyway") version "8.5.13"
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
+}
+
+flyway {
+	url = "jdbc:postgresql://localhost:5432/postgres"
+	user = "postgres"
+	password = "postgres"
+	schemas = listOf("ecommerce").toTypedArray()
 }
 
 group = "com.shop"
@@ -26,6 +34,7 @@ extra["springCloudVersion"] = "2021.0.1"
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.flywaydb:flyway-core:8.5.13")
 	implementation("org.springframework.boot:spring-boot-starter-jersey")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -34,8 +43,9 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
 	implementation("javax.xml.bind:jaxb-api")
 	implementation("org.glassfish.jaxb:jaxb-runtime")
+	implementation("org.postgresql:postgresql:42.4.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("mysql:mysql-connector-java")
+//	runtimeOnly("mysql:mysql-connector-java")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")

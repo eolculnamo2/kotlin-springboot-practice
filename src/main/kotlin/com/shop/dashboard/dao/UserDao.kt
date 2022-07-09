@@ -24,10 +24,10 @@ class UserDao @Autowired constructor(private val jdbcTemplate: JdbcTemplate) {
 
     private val rowMapper: RowMapper<UserEntity> = RowMapper<UserEntity> { resultSet: ResultSet, _: Int -> mapUserEntity(resultSet) }
 
-    fun getAllUsers(): List<UserEntity> = jdbcTemplate.query("SELECT * FROM user", rowMapper)
+    fun getAllUsers(): List<UserEntity> = jdbcTemplate.query("SELECT * FROM users", rowMapper)
 
     fun createUser(user: UserEntity) {
-        jdbcTemplate.execute("INSERT INTO user(uuid, email, password, first_name, last_name, enabled) VALUES" +
+        jdbcTemplate.execute("INSERT INTO users(uuid, email, password, first_name, last_name, enabled) VALUES" +
                 "('${user.uuid}', '${user.email}', '${user.password}', '${user.firstName}', '${user.lastName}', ${user.enabled})")
     }
 
